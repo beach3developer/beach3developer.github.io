@@ -1,0 +1,62 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="box skills">
+  <div class="stack gap-2 lg:gap-4">
+    <Icon icon="terminal-window" color="var(--accent-regular)" size="2.5rem" gradient />
+    <h2>フルスタック</h2>
+    <p>Node.js,Python等のプログラミング言語に対応し、PowerPlatformを使ってPowerAppsなどでアプリも作成。Windowsに長く触れていたこともありPowerShellで改善ツールを作成するのも得意です。</p>
+  </div>
+  <div class="stack gap-2 lg:gap-4">
+    <Icon icon="operation" color="var(--accent-regular)" size="2.5rem" gradient />
+    <h2>システムの運用・保守</h2>
+    <p>開発の経験をしたのちに、オンプレミスサーバーの運用や保守からAWS,Azureを中心としたクラウドサービスの保守や運用までを幅広く経験してきました。</p>
+  </div>
+  <div class="stack gap-2 lg:gap-4">
+    <Icon icon="strategy" color="var(--accent-regular)" size="2.5rem" gradient />
+    <h2>プロジェクトマネージャー</h2>
+    <p>社内外問わず、大小の様々なプロジェクト経験。その経験からPMIが発行しているPMP資格まで保有しています。</p>
+  </div>
+</section>
+
+<style>
+  .box {
+    border: 1px solid var(--gray-800);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    background-color: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .skills h2 {
+    font-size: var(--text-lg);
+  }
+
+  .skills p {
+    color: var(--gray-400);
+  }
+
+  @media (min-width: 50em) {
+    .box {
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5rem;
+    }
+
+    .skills h2 {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>

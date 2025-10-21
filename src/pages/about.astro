@@ -1,0 +1,131 @@
+---
+import ContactCTA from '../components/ContactCTA.astro';
+import Hero from '../components/Hero.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About | Beach3" description="About Beach3 Engineer">
+  <div class="stack gap-20">
+    <main class="wrapper about">
+      <Hero
+        title="About"
+        tagline="私について少し紹介させてください。"
+      >
+        <img
+          width="1553"
+          height="873"
+          src="/assets/about.jpeg"
+          alt="Atami Sakura"
+        />
+      </Hero>
+
+      <section>
+        <h2 class="section-title">WHO AM I?</h2>
+        <div class="content">
+          <p>
+            私は神奈川県湘南で生まれ育ち、現在は横浜市に住んでいます。
+            学生時代はサッカーに打ち込み、高校まではサッカーばかりの生活を送っていました。
+          </p>
+          <p>
+            大学は県内の私立大学に進学し、経営学を専攻しました。当時は特にSEを目指していたわけではなく、スポーツに関連する業界への就職を漠然と考えていました。
+            しかし、就職活動のために業界研究を進める中で、高校時代に仲良くしてくださった体育教師から言われた言葉が心に残っていました。
+            「お前は、俺には向いていないこういうパソコンとかの世界の方が合ってるよ。」
+            その何気ない一言をきっかけにIT業界へ興味を持ち、スポーツメーカーの店舗スタッフと迷った末に、IT企業にSEとして入社することを決意しました。実際に働き始めると想像以上に面白く、今ではSEという仕事にすっかりのめり込み、楽しく働いています。
+            仕事では、サーバー構築からアプリケーション開発、クラウド環境構築、システム運用保守まで幅広く経験してきました。最近は特に、AWSやAzureといったクラウド環境を活用したシステム構築や運用に携わることが多いです。
+          </p>
+        </div>
+      </section>
+      <section>
+        <h2 class="section-title">WHAT MY HOBBY?</h2>
+        <div class="content">
+          <p>Coffee:妻の影響で頑張って飲み始めたのですが気がついたら妻よりハマってしまい、今では自分のほうがこだわりが強くコーヒーにはうるさくなりました。</p>
+          <p>Travel:海外旅行が好きで、様々な国へ行きました。結婚してからはすっかりいかなくなりました。</p>
+          <p>Soccer:観戦も好きですが、観戦よりもプレーする方が好きです。</p>
+        </div>
+      </section>
+      <section>
+        <h2 class="section-title">MY SKILLS?</h2>
+        <div class="content">
+          <p>
+            HTML,CSS,JavaScript,Vue.js,Python,Node.js,PowerShell,Github,AWS,GoogleCloud,Azure,PMP,ITIL
+          </p>
+        </div>
+      </section>
+      <section>
+        <h2 class="section-title">GET TO KNOW ME!!</h2>
+        <div class="content">
+          <p>
+            IT技術はたくさんの人の生活を豊かにしていくものだと思います。経験がなくても、まずは自分でやってみることが大切です。
+            日本の中小企業で頑張っているみなさまの少しでもお役に立てるような記事やブログを投稿して、自分なりにたくさんの人の役に立てるようなサイトにしていきたいと思います。
+          </p>
+        </div>
+      </section>
+      <!-- <section>
+        <h2 class="section-title">Skills</h2>
+        <div class="content">
+          <p>officia unde omnis</p>
+        </div>
+      </section> -->
+    </main>
+
+    <ContactCTA />
+  </div>
+</BaseLayout>
+
+<style>
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  img {
+    margin-top: 1.5rem;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-md);
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--gray-200);
+  }
+
+  .section-title {
+    grid-column-start: 1;
+    font-size: var(--text-xl);
+    color: var(--gray-0);
+  }
+
+  .content {
+    grid-column: 2 / 4;
+  }
+
+  .content :global(a) {
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .content :global(a:hover),
+  .content :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  @media (min-width: 50em) {
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 60% 1fr;
+    }
+
+    .about > :global(:first-child) {
+      grid-column-start: 2;
+    }
+
+    section {
+      display: contents;
+      font-size: var(--text-lg);
+    }
+  }
+</style>
