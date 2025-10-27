@@ -4,7 +4,7 @@ publishDate: 2025-09-28 00:00:00
 img: /assets/blog/2025/GitHub_Logo.png
 img_alt: GitHub
 description: |
-  Astroで作成したサイトにGoogle Analyticsを設定し、GitHub Pagesを使って無料で個人サイトを公開する手順を解説します。
+  静的サイトジェネレーターAstroで作成したブログをGitHub Pagesで無料公開する手順を完全解説。Node.jsやGitの設定からActionsでの自動デプロイ、Analytics導入まで詳しく説明。
 tags:
   - GitHub Pages
   - Astro

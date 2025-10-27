@@ -6,8 +6,8 @@ import SendContactMessage from '../components/SendContactMessage.astro';
 ---
 
 <BaseLayout
-  title="お問い合わせ | Beach3"
-  description="ブログなどに関するお問い合わせはこちらから。"
+  title="Contact | Beach3"
+  description="Contact Beach3 Engineer"
 >
   <div class="stack gap-20">
     <main class="wrapper py-12">
@@ -35,7 +35,7 @@ import SendContactMessage from '../components/SendContactMessage.astro';
             <label for="message">メッセージ</label>
             <textarea id="message" name="message" rows="6" required></textarea>
           </div>
-          <SendContactMessage contact_email="contact_email" name="name" subject="subject" message="message" />
+          <SendContactMessage />
       </div>
     </main>
     <ContactCTA />

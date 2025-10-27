@@ -4,7 +4,7 @@ publishDate: 2025-10-07 00:00:00
 img: /assets/blog/2025/PMP_CERTIFICATE.png
 img_alt: PMP
 description: |
-  右上の説明用文言
+  PMP（プロジェクトマネジメント・プロフェッショナル）資格の概要から、受験要件・勉強法・試験対策・更新方法までを実体験をもとに解説。初学者でも理解できるように、学習手順やおすすめ教材も紹介します。
 tags:
   - Project Management
   - Certification

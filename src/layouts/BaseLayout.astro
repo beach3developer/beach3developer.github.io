@@ -23,6 +23,7 @@ const isProd = import.meta.env.PROD;
     <MainHead title={title} description={description} />
     {isProd && <GoogleAnalytics />}
     {isProd && <NewRelic />}
+    <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>
     <div class="stack backgrounds">
