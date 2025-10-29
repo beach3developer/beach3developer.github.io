@@ -1,11 +1,13 @@
 ---
+import Modal from "../components/Modal.astro";
+
 const EmailJSPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY; // EmailJSパブリックキー
 const EmailJSServiceID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID; // あなたのEmailJSサービスID
 const EmailJSTemplateID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID; // あなたのテンプレートID
 ---
+<button type="button" id="sendMailBtn">問い合わせ送信</button>
 
-<button id="sendMailBtn">問い合わせ送信</button>
-
+<Modal />
 <!-- Email.jsライブラリ読み込み -->
 <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer>
@@ -16,48 +18,65 @@ const EmailJSTemplateID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID; // あな�
     const sendBtn = document.getElementById("sendMailBtn");
 
     sendBtn.addEventListener("click", async () => {
-      if (!confirm("入力内容を送信しますか？")) return;
-
-      // 入力値をフォームから直接取得
-      const name = document.getElementById("name").value;
-      const contact_email = document.getElementById("contact_email").value;
-      const subject = document.getElementById("subject").value;
-      const message = document.getElementById("message").value;
-
-      // Email.js 初期化
-      emailjs.init({
-        publicKey: EmailJSPublicKey // EmailJSパブリックキー,
-      });
-
-      // テンプレート変数
-      const templateParams = {
-        name,
-        contact_email,
-        subject,
-        message,
-      };
-
-      console.log("送信内容:", templateParams);
-
-      // ボタン無効化
-      sendBtn.disabled = true;
-      sendBtn.textContent = "送信中...";
-
       try {
+        // 入力値をフォームから直接取得
+        const name = document.getElementById("name").value;
+        const contact_email = document.getElementById("contact_email").value;
+        const subject = document.getElementById("subject").value;
+        const message = document.getElementById("message").value;
+
+        // 入力内容のバリデーションチェック
+        if (!name || !contact_email || !subject || !message) {
+          await openModal("全てのフィールドを正しく入力してください。", { title: "入力エラー", mode: "alert" });
+          await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
+          return;
+        }
+
+        // メールアドレスのバリデーションチェック
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        if (!emailRegex.test(contact_email)) {
+          await openModal("メールアドレスを正しく入力してください。", { title: "入力エラー", mode: "alert" });
+          await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
+          return;
+        }
+
+        // if (!confirm("入力内容を送信しますか？")) return;
+        const ok = await openModal("入力内容を送信しますか？", { title: "確認", mode: "confirm" });
+        if (!ok) return;
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
+
+        // Email.js 初期化
+        emailjs.init({
+          publicKey: EmailJSPublicKey // EmailJSパブリックキー,
+        });
+
+        // テンプレート変数
+        const templateParams = {
+          name,
+          contact_email,
+          subject,
+          message,
+        };
+
+        // ボタン無効化
+        sendBtn.disabled = true;
+        sendBtn.textContent = "送信中...";
+
         const response = await emailjs.send(
           EmailJSServiceID, // あなたのEmailJSサービスID
           EmailJSTemplateID, // あなたのテンプレートID
           templateParams
         );
       // Success 
-        console.log("SUCCESS!", response.status, response.text);
-        alert("お問い合わせを送信しました。ありがとうございました！");
+        await openModal("お問い合わせを送信しました。ありがとうございました！", { title: "送信完了", mode: "alert" });
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
         sendBtn.textContent = "送信完了";
         window.location.href = '/';
       } catch (error) {
       // Error
         console.error("FAILED...", error);
-        alert("送信に失敗しました。再度お試しください。");
+        await openModal("送信に失敗しました。再度お試しください。", { title: "送信エラー", mode: "alert" });
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
         sendBtn.textContent = "送信する";
         sendBtn.disabled = false;
       }

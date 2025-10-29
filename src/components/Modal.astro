@@ -1,0 +1,113 @@
+---
+const { id = "globalModal" } = Astro.props;
+---
+<div id={id} class="modal-overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="close" data-close>&times;</button>
+    <h3 id="modalTitle">確認</h3>
+    <p id="modalMessage">メッセージ内容がここに入ります。</p>
+    <div class="actions">
+      <button class="ok" data-ok>OK</button>
+      <button class="cancel" data-cancel>キャンセル</button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  const modal = document.getElementById("globalModal");
+  const message = modal.querySelector("#modalMessage");
+  const title = modal.querySelector("#modalTitle");
+  const okBtn = modal.querySelector("[data-ok]");
+  const cancelBtn = modal.querySelector("[data-cancel]");
+  const closeBtn = modal.querySelector("[data-close]");
+
+  let resolver = null;
+  let mode = "alert"; // "alert" or "confirm"
+
+  // 外部から呼び出せる関数
+  window.openModal = (msg, options = {}) => {
+    title.textContent = options.title || "確認";
+    message.textContent = msg;
+    mode = options.mode || "alert";
+
+    if (mode === "alert") cancelBtn.style.display = "none";
+    else cancelBtn.style.display = "inline-block";
+
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden", "false");
+
+    return new Promise((resolve) => (resolver = resolve));
+  };
+
+  function closeModal(result) {
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+    if (resolver) resolver(result);
+  }
+
+  okBtn.addEventListener("click", () => closeModal(true));
+  cancelBtn.addEventListener("click", () => closeModal(false));
+  closeBtn.addEventListener("click", () => closeModal(false));
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal(false);
+    document.activeElement.blur()
+  });
+</script>
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 1000;
+  }
+  .modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal {
+    background: var(--gray-900);
+    color: var(--gray-50);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 60%;
+    width: 90%;
+    position: relative;
+  }
+  .modal .close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  .modal .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .modal .ok, .modal .cancel {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+  }
+  .modal .ok {
+    background: var(--accent-regular);
+    color: #fff;
+  }
+  .modal .cancel {
+    background: #555;
+    color: #fff;
+  }
+</style>

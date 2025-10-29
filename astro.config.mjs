@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://beach3developer.github.io',
+  site: 'https://beach3developer.github.io/',
   base: '/',
   integrations: [partytown({
     config: {
