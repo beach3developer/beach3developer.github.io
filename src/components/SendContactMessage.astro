@@ -14,7 +14,7 @@ const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHA
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 
 <!-- reCAPTCHA v3 -->
-<script src="https://www.google.com/recaptcha/api.js?render={{RecaptchaSiteKey}}" async defer></script>
+<script src={`https://www.google.com/recaptcha/api.js?render=${RecaptchaSiteKey}`} async defer></script>
 
 <script is:inline define:vars={{EmailJSPublicKey, EmailJSServiceID, EmailJSTemplateID, RecaptchaSiteKey}}>
   document.addEventListener("DOMContentLoaded", () => {
