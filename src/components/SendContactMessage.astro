@@ -8,18 +8,15 @@ const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHA
 ---
 <button type="button" id="sendMailBtn">問い合わせ送信</button>
 
-<!-- reCAPTCHAウィジェット -->
-<div class="g-recaptcha" data-sitekey={RecaptchaSiteKey}></div>
-
 <Modal />
 
 <!-- Email.jsライブラリ読み込み -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 
-<!-- reCAPTCHAライブラリ -->
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<!-- reCAPTCHA v3 -->
+<script src="https://www.google.com/recaptcha/api.js?render={{RecaptchaSiteKey}}" async defer></script>
 
-<script is:inline define:vars={{EmailJSPublicKey, EmailJSServiceID, EmailJSTemplateID}}>
+<script is:inline define:vars={{EmailJSPublicKey, EmailJSServiceID, EmailJSTemplateID, RecaptchaSiteKey}}>
   document.addEventListener("DOMContentLoaded", () => {
     const sendBtn = document.getElementById("sendMailBtn");
 
@@ -44,16 +41,23 @@ const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHA
           return;
         }
 
-        // reCAPTCHA 検証
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (!recaptchaResponse) {
-          await openModal("reCAPTCHA認証を完了してください。", { title: "認証エラー", mode: "alert" });
-          return;
-        }
-
         // if (!confirm("入力内容を送信しますか？")) return;
         const ok = await openModal("入力内容を送信しますか？", { title: "確認", mode: "confirm" });
         if (!ok) return;
+
+        // ボタン無効化
+        sendBtn.disabled = true;
+        sendBtn.textContent = "送信中...";
+
+        // reCAPTCHAトークン取得
+        const token = await grecaptcha.execute(RecaptchaSiteKey, { action: "submit" });
+
+        if (!token) {
+          await openModal("reCAPTCHA認証に失敗しました。再度お試しください。", { title: "認証エラー", mode: "alert" });
+          sendBtn.disabled = false;
+          sendBtn.textContent = "送信する";
+          return;
+        }
 
         // Email.js 初期化
         emailjs.init({ publicKey: EmailJSPublicKey });
@@ -64,29 +68,33 @@ const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHA
           contact_email,
           subject,
           message,
+          "g-recaptcha-response": token,
         };
 
-        // ボタン無効化
-        sendBtn.disabled = true;
         sendBtn.textContent = "送信中...";
 
+        // メール送信
         const response = await emailjs.send(
-          EmailJSServiceID, // あなたのEmailJSサービスID
-          EmailJSTemplateID, // あなたのテンプレートID
+          EmailJSServiceID,
+          EmailJSTemplateID,
           templateParams
         );
-      // Success 
+
+        console.log("SUCCESS!", response.status, response.text);
+
+        // Success 
         await openModal("お問い合わせを送信しました。ありがとうございました！", { title: "送信完了", mode: "alert" });
         sendBtn.textContent = "送信完了";
-        grecaptcha.reset(); // reCAPTCHAリセット
         window.location.href = '/';
+
       } catch (error) {
-      // Error
+
+        // Error
         console.error("FAILED...", error);
         await openModal("送信に失敗しました。再度お試しください。", { title: "送信エラー", mode: "alert" });
         sendBtn.textContent = "送信する";
         sendBtn.disabled = false;
-        grecaptcha.reset();
+
       }
     });
   });
