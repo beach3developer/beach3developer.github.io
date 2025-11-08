@@ -4,14 +4,20 @@ import Modal from "../components/Modal.astro";
 const EmailJSPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY; // EmailJSパブリックキー
 const EmailJSServiceID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID; // あなたのEmailJSサービスID
 const EmailJSTemplateID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID; // あなたのテンプレートID
+const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHAサイトキー
 ---
 <button type="button" id="sendMailBtn">問い合わせ送信</button>
 
+<!-- reCAPTCHAウィジェット -->
+<div class="g-recaptcha" data-sitekey={RecaptchaSiteKey}></div>
+
 <Modal />
+
 <!-- Email.jsライブラリ読み込み -->
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer>
-</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+
+<!-- reCAPTCHAライブラリ -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <script is:inline define:vars={{EmailJSPublicKey, EmailJSServiceID, EmailJSTemplateID}}>
   document.addEventListener("DOMContentLoaded", () => {
@@ -28,7 +34,6 @@ const EmailJSTemplateID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID; // あな�
         // 入力内容のバリデーションチェック
         if (!name || !contact_email || !subject || !message) {
           await openModal("全てのフィールドを正しく入力してください。", { title: "入力エラー", mode: "alert" });
-          await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
           return;
         }
 
@@ -36,19 +41,22 @@ const EmailJSTemplateID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID; // あな�
         const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
         if (!emailRegex.test(contact_email)) {
           await openModal("メールアドレスを正しく入力してください。", { title: "入力エラー", mode: "alert" });
-          await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
+          return;
+        }
+
+        // reCAPTCHA 検証
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse) {
+          await openModal("reCAPTCHA認証を完了してください。", { title: "認証エラー", mode: "alert" });
           return;
         }
 
         // if (!confirm("入力内容を送信しますか？")) return;
         const ok = await openModal("入力内容を送信しますか？", { title: "確認", mode: "confirm" });
         if (!ok) return;
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
 
         // Email.js 初期化
-        emailjs.init({
-          publicKey: EmailJSPublicKey // EmailJSパブリックキー,
-        });
+        emailjs.init({ publicKey: EmailJSPublicKey });
 
         // テンプレート変数
         const templateParams = {
@@ -69,22 +77,27 @@ const EmailJSTemplateID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID; // あな�
         );
       // Success 
         await openModal("お問い合わせを送信しました。ありがとうございました！", { title: "送信完了", mode: "alert" });
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
         sendBtn.textContent = "送信完了";
+        grecaptcha.reset(); // reCAPTCHAリセット
         window.location.href = '/';
       } catch (error) {
       // Error
         console.error("FAILED...", error);
         await openModal("送信に失敗しました。再度お試しください。", { title: "送信エラー", mode: "alert" });
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // モーダル閉じるアニメーション待ち
         sendBtn.textContent = "送信する";
         sendBtn.disabled = false;
+        grecaptcha.reset();
       }
     });
   });
 </script>
 
 <style>
+  .g-recaptcha {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
   button {
     position: relative;
     display: flex;
