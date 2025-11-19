@@ -1,5 +1,5 @@
 ---
-title: "【第1回】情シス1人の中小企業でIT導入を始める"
+title: "情シス1人の中小企業でIT導入を始める"
 publishDate: 2025-10-09 00:00:00
 img: /assets/blog/2025/SOLO_IT_PERSONNEL.png
 img_alt: SOLO
@@ -10,7 +10,7 @@ tags:
   - 第1回
   - 架空会社の設定
 ---
-[第1回](https://beach3developer.github.io/blog/20251009_solo_it_part1)
+
 ## 👦情シス1人の中小企業でやるIT導入シリーズはじめます。
 ### 📕シリーズについて
 この記事では、これから2025年に中小企業がIT導入を始める場合、どのように取り組んでいけばいいかをテーマにしています。
