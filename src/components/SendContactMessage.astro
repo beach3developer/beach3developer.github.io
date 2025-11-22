@@ -4,7 +4,6 @@ import Modal from "../components/Modal.astro";
 const EmailJSPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY; // EmailJSパブリックキー
 const EmailJSServiceID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID; // あなたのEmailJSサービスID
 const EmailJSTemplateID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID; // あなたのテンプレートID
-const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHAサイトキー
 ---
 <button type="button" id="sendMailBtn">問い合わせ送信</button>
 
@@ -13,10 +12,7 @@ const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHA
 <!-- Email.jsライブラリ読み込み -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 
-<!-- reCAPTCHA v3 -->
-<script src={`https://www.google.com/recaptcha/api.js?render=${RecaptchaSiteKey}`} async defer></script>
-
-<script is:inline define:vars={{EmailJSPublicKey, EmailJSServiceID, EmailJSTemplateID, RecaptchaSiteKey}}>
+<script is:inline define:vars={{EmailJSPublicKey, EmailJSServiceID, EmailJSTemplateID}}>
   document.addEventListener("DOMContentLoaded", () => {
     const sendBtn = document.getElementById("sendMailBtn");
 
@@ -49,16 +45,6 @@ const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHA
         sendBtn.disabled = true;
         sendBtn.textContent = "送信中...";
 
-        // reCAPTCHAトークン取得
-        const token = await grecaptcha.execute(RecaptchaSiteKey, { action: "submit" });
-
-        if (!token) {
-          await openModal("reCAPTCHA認証に失敗しました。再度お試しください。", { title: "認証エラー", mode: "alert" });
-          sendBtn.disabled = false;
-          sendBtn.textContent = "送信する";
-          return;
-        }
-
         // Email.js 初期化
         emailjs.init({ publicKey: EmailJSPublicKey });
 
@@ -68,7 +54,6 @@ const RecaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY; // reCAPTCHA
           contact_email,
           subject,
           message,
-          "g-recaptcha-response": token,
         };
 
         sendBtn.textContent = "送信中...";
