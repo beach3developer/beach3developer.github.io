@@ -1,0 +1,302 @@
+---
+const title = "QR Code Generator | Beach3 Utilities";
+---
+
+<section class="qr-generator wrapper">
+  <div class="stack gap-10">
+    <header class="stack gap-4">
+      <h1>QR Code Generator</h1>
+      <p class="subtitle">
+        テキスト・URL・WiFiのQRコードをオフラインで生成できます
+      </p>
+    </header>
+
+    <div class="card stack gap-8">
+
+      <!-- Mode -->
+      <div class="mode-switch">
+        <button data-mode="text" class="active">Text / URL</button>
+        <button data-mode="wifi">WiFi</button>
+      </div>
+
+      <!-- TEXT -->
+      <div id="textMode">
+        <textarea id="textInput" placeholder="Enter text or URL"></textarea>
+      </div>
+
+      <!-- WIFI -->
+      <div id="wifiMode" class="hidden stack gap-4">
+        <input id="ssid" placeholder="SSID" />
+        <input id="wifiPassword" placeholder="Password" />
+        <select id="encryption">
+          <option value="WPA">WPA / WPA2</option>
+          <option value="WEP">WEP</option>
+          <option value="nopass">None</option>
+        </select>
+      </div>
+
+      <!-- Options -->
+      <div class="options">
+        <label>
+          Size
+          <select id="size">
+            <option value="200">200</option>
+            <option value="300" selected>300</option>
+            <option value="400">400</option>
+          </select>
+        </label>
+
+        <label>
+          QR Color
+          <input type="color" id="fgColor" value="#000000" />
+        </label>
+
+        <label>
+          Background
+          <input type="color" id="bgColor" value="#ffffff" />
+        </label>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button id="copyBtn" class="btn-secondary">Copy</button>
+        <button id="downloadBtn" class="btn-primary">Download</button>
+      </div>
+
+      <!-- Output -->
+      <div class="qr-output">
+        <canvas id="canvas"></canvas>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  import QRCode from "qrcode";
+
+  const textInput = document.getElementById("textInput");
+  const ssidInput = document.getElementById("ssid");
+  const wifiPasswordInput = document.getElementById("wifiPassword");
+  const encryptionSelect = document.getElementById("encryption");
+  const sizeSelect = document.getElementById("size");
+  const fgColorInput = document.getElementById("fgColor");
+  const bgColorInput = document.getElementById("bgColor");
+  const canvas = document.getElementById("canvas");
+  const copyBtn = document.getElementById("copyBtn");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const modeButtons = document.querySelectorAll(".mode-switch button");
+
+  let currentMode = "text";
+
+  modeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      modeButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentMode = btn.dataset.mode;
+
+      document.getElementById("textMode")
+        .classList.toggle("hidden", currentMode !== "text");
+
+      document.getElementById("wifiMode")
+        .classList.toggle("hidden", currentMode !== "wifi");
+
+      generateQR();
+    });
+  });
+
+  function getWiFiString() {
+    const ssid = ssidInput.value.trim();
+    const pass = wifiPasswordInput.value.trim();
+    const enc = encryptionSelect.value;
+    if (!ssid) return "";
+    return `WIFI:T:${enc};S:${ssid};P:${pass};;`;
+  }
+
+  async function generateQR() {
+    let text = currentMode === "text"
+      ? textInput.value.trim()
+      : getWiFiString();
+
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!text) return;
+
+    const size = Number(sizeSelect.value);
+    canvas.width = size;
+    canvas.height = size;
+
+    await QRCode.toCanvas(canvas, text, {
+      width: size,
+      margin: 1,
+      color: {
+        dark: fgColorInput.value,
+        light: bgColorInput.value
+      }
+    });
+  }
+
+  [
+    textInput,
+    ssidInput,
+    wifiPasswordInput,
+    encryptionSelect,
+    sizeSelect,
+    fgColorInput,
+    bgColorInput
+  ].forEach(el => {
+    el.addEventListener("input", generateQR);
+    el.addEventListener("change", generateQR);
+  });
+
+  downloadBtn.addEventListener("click", () => {
+    if (!canvas.width) return;
+    const link = document.createElement("a");
+    link.download = "beach3-qr.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    if (!canvas.width) return;
+
+    canvas.toBlob(async blob => {
+      try {
+        await navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob })
+        ]);
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => (copyBtn.textContent = "Copy"), 1500);
+      } catch {
+        alert("Copy failed. Browser may not support image clipboard.");
+      }
+    });
+  });
+
+  generateQR();
+</script>
+
+<style>
+.qr-generator {
+  padding: 4rem 1.5rem;
+}
+
+.subtitle {
+  color: var(--gray-400);
+  font-size: var(--text-md);
+}
+
+.card {
+  background: var(--gradient-subtle);
+  border: 1px solid var(--gray-800);
+  border-radius: 1.75rem;
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+}
+
+.mode-switch {
+  display: flex;
+  background: var(--gray-800);
+  border-radius: 999px;
+  padding: 0.3rem;
+  gap: 0.3rem;
+}
+
+.mode-switch button {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--gray-300);
+  transition: var(--theme-transition);
+}
+
+.mode-switch button.active {
+  background: var(--gradient-accent);
+  color: var(--accent-text-over);
+}
+
+textarea,
+input,
+select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--gray-700);
+  background: var(--gray-999);
+  color: var(--gray-200);
+  font-size: var(--text-base);
+  transition: var(--theme-transition);
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-regular);
+  box-shadow: 0 0 0 3px var(--accent-subtle-overlay);
+}
+
+.options {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  color: var(--accent-text-over);
+  cursor: pointer;
+  transition: var(--theme-transition);
+}
+
+.btn-secondary {
+  background: var(--gray-800);
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 1rem;
+  font-weight: 500;
+  color: var(--gray-200);
+  cursor: pointer;
+  transition: var(--theme-transition);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.qr-output {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: var(--gray-900);
+  border: 1px solid var(--gray-800);
+  min-height: 320px;
+}
+
+.hidden {
+  display: none;
+}
+</style>
