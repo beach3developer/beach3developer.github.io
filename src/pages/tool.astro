@@ -3,30 +3,138 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import ContactCTA from '../components/ContactCTA.astro';
 
-const tools = (await getCollection('tool')).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));;
+const tools = (await getCollection('tool')).sort(
+  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)
+);
 ---
 
 <BaseLayout
-  title="My Tool | Beach3"
-  description="Developer Tools"
+  title="Developer Tools | Beach3"
+  description="Beach3 Utilities – シンプルで安全に使える開発者向けWebツール集"
 >
-  <div class="stack gap-20">
-    <main class="wrapper stack gap-8">
-      <h1>Developer Tools</h1>
+  <div class="tools-page">
 
-      <ul>
+    <!-- Hero -->
+    <section class="hero">
+      <h1>Beach3 Utilities</h1>
+      <p>
+        シンプルで美しく、そして安全に。<br />
+        ブラウザ上で完結する開発者向けツール集。
+      </p>
+    </section>
+
+    <!-- Tool Grid -->
+    <main class="wrapper">
+      <div class="tool-grid">
         {
           tools.map(tool => (
-            <li>
-              <a href={`/tool/${tool.slug}`}>
-                <strong>{tool.data.title}</strong>
-                <p>{tool.data.description}</p>
-              </a>
-            </li>
+            <a class="tool-card" href={`/tool/${tool.slug}`}>
+              <div class="card-header">
+                <h2>{tool.data.title}</h2>
+              </div>
+              <p class="card-description">
+                {tool.data.description}
+              </p>
+              <span class="card-link">Open Tool →</span>
+            </a>
           ))
         }
-      </ul>
+      </div>
     </main>
+
     <ContactCTA />
   </div>
 </BaseLayout>
+
+<style>
+.tools-page {
+  padding: 4rem 1.5rem;
+}
+
+/* ===============================
+   Hero
+================================ */
+.hero {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 4rem auto;
+}
+
+.hero h1 {
+  font-size: var(--text-5xl);
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
+}
+
+.hero p {
+  color: var(--gray-400);
+  font-size: var(--text-lg);
+  line-height: 1.6;
+}
+
+/* ===============================
+   Grid
+================================ */
+.tool-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .tool-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tool-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===============================
+   Card
+================================ */
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  border-radius: 1.75rem;
+  background: var(--gradient-subtle);
+  border: 1px solid var(--gray-800);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  transition: var(--theme-transition);
+}
+
+.tool-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-regular);
+}
+
+.card-header h2 {
+  font-size: var(--text-xl);
+  margin-bottom: 0.75rem;
+}
+
+.card-description {
+  color: var(--gray-400);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.card-link {
+  margin-top: 1.5rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--accent-regular);
+  transition: var(--theme-transition);
+}
+
+.tool-card:hover .card-link {
+  transform: translateX(4px);
+}
+</style>
