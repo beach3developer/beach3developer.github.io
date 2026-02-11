@@ -76,12 +76,12 @@ const tools = (await getCollection('tool')).sort((a, b) => (a.data.order ?? 0) -
         </div>
       </section>
 
-      <section class="section with-background bg-variant">
+      <section class="section with-background bg-variant with-cta">
         <header class="section-header stack gap-2 lg:gap-4">
-          <h3>便利ツール</h3>
+          <h3>Beach3 Utilities</h3>
           <p>
-            ちょっとあったら便利な開発者向けツールを公開しています。
-            フロントエンドで使える小さな機能が実装されています。
+            ブラウザ上で完結する、シンプルで安全な開発者向けツール集。
+            日々の小さな作業を、少しだけ快適にします。
           </p>
         </header>
 
@@ -89,15 +89,28 @@ const tools = (await getCollection('tool')).sort((a, b) => (a.data.order ?? 0) -
           <Grid variant="small">
             {
               tools.map((tool) => (
-                <li class="mention-card">
+                <li class="tool-card">
                   <a href={`/tool/${tool.slug}`}>
-                    <strong>{tool.data.title}</strong>
-                    <p>{tool.data.description}</p>
+                    <div class="tool-card-inner">
+                      <strong>{tool.data.title}</strong>
+                      <p>{tool.data.description}</p>
+                      <span class="tool-link">
+                        Open
+                        <Icon icon="arrow-right" size="1em" />
+                      </span>
+                    </div>
                   </a>
                 </li>
               ))
             }
           </Grid>
+        </div>
+
+        <div class="cta">
+          <CallToAction href="/tool/">
+            View All Tools
+            <Icon icon="arrow-right" size="1.2em" />
+          </CallToAction>
         </div>
       </section>
 
@@ -229,23 +242,64 @@ const tools = (await getCollection('tool')).sort((a, b) => (a.data.order ?? 0) -
     }
   }
 
-  /* ====================================================== */
-
-  .mention-card {
-    display: flex;
-    height: 7rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 1px solid var(--gray-800);
-    border-radius: 1.5rem;
-    color: var(--gray-300);
-    background: var(--gradient-subtle);
-    box-shadow: var(--shadow-sm);
+  .tool-card {
+    list-style: none;
   }
 
+  .tool-card a {
+    display: block;
+    height: 100%;
+    padding: 1.75rem;
+    border-radius: 1.75rem;
+    border: 1px solid var(--gray-800);
+    background: var(--gradient-subtle);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    transition: var(--theme-transition);
+  }
+
+  .tool-card a:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-regular);
+  }
+
+  .tool-card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: 100%;
+  }
+
+  .tool-card strong {
+    font-size: var(--text-lg);
+    color: var(--gray-100);
+  }
+
+  .tool-card p {
+    font-size: var(--text-sm);
+    color: var(--gray-400);
+    flex-grow: 1;
+    line-height: 1.6;
+  }
+
+  .tool-link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--accent-regular);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: var(--theme-transition);
+  }
+
+  .tool-card a:hover .tool-link {
+    transform: translateX(4px);
+  }
+
+
   @media (min-width: 50em) {
-    .mention-card {
+    .tool-card {
       border-radius: 1.5rem;
       height: 9.5rem;
     }
