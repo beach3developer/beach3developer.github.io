@@ -1,0 +1,23 @@
+---
+title: JSON Formatter
+description: JSONを整形し、エラーがあれば修正ポイントを表示します。
+order: 2
+---
+
+import JsonFormatter from '../../components/tool/JsonFormatter.astro';
+
+
+JSONを入力すると以下の機能を提供します。
+
+- インデントを整えて表示
+- JSON構文エラーの検出
+- エラー位置のヒント表示
+
+### 使い方
+
+1. 左の入力欄にJSONを貼り付け
+2. 自動で整形 or エラー表示
+
+---
+
+<JsonFormatter />

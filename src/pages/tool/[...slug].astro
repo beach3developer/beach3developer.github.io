@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+
+import Hero from '../../components/Hero.astro';
+import Icon from '../../components/Icon.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('tool');
+
+  return tools.map(tool => ({
+    params: { slug: tool.slug },
+    props: { tool },
+  }));
+}
+
+const { tool } = Astro.props;
+const { Content } = await tool.render();
+---
+
+<BaseLayout title={tool.data.title} description={tool.data.description}>
+  <div class="stack gap-20">
+    <div class="stack gap-15">
+      <header>
+        <div class="wrapper stack gap-2">
+          <a class="back-link" href="/tool/"><Icon icon="arrow-left" /> Tool</a>
+          <Hero title={tool.data.title} align="start">
+            <div class="details">
+              <p class="description">{tool.data.description}</p>
+            </div>
+          </Hero>
+        </div>
+      </header>
+    </div>
+  </div>
+  <main class="wrapper stack gap-16">
+
+    <Content />
+
+    <nav>
+      <a href="/tool">← ツール一覧に戻る</a>
+    </nav>
+  </main>
+</BaseLayout>

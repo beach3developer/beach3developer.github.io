@@ -13,4 +13,12 @@ export const collections = {
       img_alt: z.string().optional(),
     }),
   }),
+  tool: defineCollection({
+    type: 'content',
+    schema: z.object({
+      title: z.string(),
+      description: z.string(),
+      order: z.number(),
+    }),
+  })
 };

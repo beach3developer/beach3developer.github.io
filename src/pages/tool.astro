@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import ContactCTA from '../components/ContactCTA.astro';
+
+const tools = (await getCollection('tool')).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));;
+---
+
+<BaseLayout
+  title="My Tool | Beach3"
+  description="Developer Tools"
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <h1>Developer Tools</h1>
+
+      <ul>
+        {
+          tools.map(tool => (
+            <li>
+              <a href={`/tool/${tool.slug}`}>
+                <strong>{tool.data.title}</strong>
+                <p>{tool.data.description}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+    <ContactCTA />
+  </div>
+</BaseLayout>

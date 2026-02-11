@@ -1,0 +1,206 @@
+---
+---
+<section class="json-formatter">
+  <header class="header">
+    <h2>JSON Formatter</h2>
+  </header>
+
+  <div class="card">
+    <div class="toolbar">
+      <div class="controls">
+        <label>
+          Indent
+          <select id="indent">
+            <option value="2">2</option>
+            <option value="4">4</option>
+          </select>
+        </label>
+      </div>
+
+      <button id="copy" class="copy-btn">📋 Copy</button>
+    </div>
+
+    <div class="editors">
+      <textarea
+        id="input"
+        spellcheck="false"
+        placeholder="ここに JSON を入力してください"
+      ></textarea>
+
+      <pre class="output"><code></code></pre>
+    </div>
+
+    <div id="error" class="error"></div>
+  </div>
+</section>
+
+<script>
+  const input = document.getElementById('input');
+  const output = document.querySelector('.output code');
+  const error = document.getElementById('error');
+  const indentSelect = document.getElementById('indent');
+  const copyBtn = document.getElementById('copy');
+
+  function highlight(json) {
+    return json.replace(
+      /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(\.\d+)?)/g,
+      m => {
+        let c = 'number';
+        if (/^"/.test(m)) c = /:$/.test(m) ? 'key' : 'string';
+        else if (/true|false/.test(m)) c = 'boolean';
+        else if (/null/.test(m)) c = 'null';
+        return `<span class="${c}">${m}</span>`;
+      }
+    );
+  }
+
+  function format() {
+    try {
+      const obj = JSON.parse(input.value);
+      const formatted = JSON.stringify(obj, null, Number(indentSelect.value));
+      output.innerHTML = highlight(formatted);
+      error.textContent = '';
+    } catch (e) {
+      output.innerHTML = '';
+      error.textContent = e.message;
+    }
+  }
+
+  input.addEventListener('input', format);
+  indentSelect.addEventListener('change', format);
+
+  copyBtn.addEventListener('click', async () => {
+    if (!output.textContent) return;
+    await navigator.clipboard.writeText(output.textContent);
+    copyBtn.textContent = '✅ Copied';
+    setTimeout(() => (copyBtn.textContent = '📋 Copy'), 1500);
+  });
+</script>
+
+<style>
+/* ===============================
+   Layout
+================================ */
+.json-formatter {
+  display: grid;
+  gap: 2rem;
+}
+
+.header {
+  text-align: center;
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+.header p {
+  color: var(--gray-300);
+  font-size: var(--text-md);
+}
+
+/* ===============================
+   Card
+================================ */
+.card {
+  background: var(--gradient-subtle);
+  border: 1px solid var(--gray-800);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+/* ===============================
+   Toolbar
+================================ */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: var(--text-sm);
+  color: var(--gray-300);
+}
+
+select {
+  background: var(--gray-999);
+  border: 1px solid var(--gray-700);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* ===============================
+   Buttons
+================================ */
+.copy-btn {
+  background: var(--gradient-accent);
+  color: var(--accent-text-over);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--theme-transition);
+}
+
+.copy-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* ===============================
+   Editors
+================================ */
+.editors {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 50em) {
+  .editors {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+textarea {
+  min-height: 260px;
+  padding: 1rem;
+  font-family: IPAMJM, monospace;
+  border-radius: 1rem;
+  border: 1px solid var(--gray-700);
+  background: var(--gray-999);
+  color: var(--gray-200);
+}
+
+.output {
+  min-height: 260px;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--gray-0);
+  overflow-x: auto;
+  font-family: IPAMJM, monospace;
+  box-shadow: inset 0 0 0 1px var(--gray-800);
+}
+
+/* ===============================
+   Syntax Highlight
+================================ */
+.string { color: var(--gray-600); }
+.number { color: var(--accent-light); }
+.boolean { color: var(--accent-regular); }
+.null { color: var(--accent-dark); }
+.key { color: var(--gray-500); }
+
+/* ===============================
+   Error
+================================ */
+.error {
+  color: var(--accent-dark);
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+</style>
