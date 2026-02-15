@@ -1,7 +1,7 @@
 ---
 title: "Hello,World!"
 publishDate: 2025-09-20 00:00:00
-img: /assets/blog/2025/Beach3.png
+img: /assets/blog/Beach3.png
 img_alt: Engineer
 description: |
   ITエンジニアとしての日々の学びを記録する個人ブログです。AWSやAzureなどのクラウド技術、PowerAppsなどの業務改善、個人開発の挑戦を中心に発信しています。コーヒーを片手に、技術の楽しさをゆるく共有していきます。
