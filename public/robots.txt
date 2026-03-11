@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://beach3developer.github.io/sitemap-index.xml
