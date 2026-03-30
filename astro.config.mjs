@@ -8,6 +8,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://beach3developer.github.io',
   base: '/',
+  trailingSlash: 'always',
   integrations: [
     partytown({
       config: {
