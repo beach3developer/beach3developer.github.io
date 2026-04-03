@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://beach3blog.com',
   base: '/',
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
   integrations: [
     partytown({
       config: {
