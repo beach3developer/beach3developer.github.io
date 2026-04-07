@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://beach3blog.com',
+  site: 'https://www.beach3blog.com',
   base: '/',
   trailingSlash: 'ignore',
   integrations: [
