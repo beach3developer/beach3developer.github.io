@@ -9,7 +9,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <main class="wrapper about">
       <Hero
         title="About"
-        tagline="私について少し紹介させてください。"
+        tagline="エンジニアとしてのこれまでとこれから"
       >
         <img
           width="1553"
@@ -19,53 +19,138 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         />
       </Hero>
 
+      <!-- SUMMARY -->
       <section>
-        <h2 class="section-title">WHO AM I?</h2>
+        <h2 class="section-title">SUMMARY</h2>
         <div class="content">
           <p>
-            私は神奈川県湘南で生まれ育ち、現在は横浜市に住んでいます。
-            学生時代はサッカーに打ち込み、高校まではサッカーばかりの生活を送っていました。
+            インフラからアプリケーションまで幅広く対応可能なエンジニアです。
+            オンプレミス環境の構築から、AWS・Azureを活用したクラウド設計・運用まで一貫して担当してきました。
           </p>
           <p>
-            大学は県内の私立大学に進学し、経営学を専攻しました。当時は特にSEを目指していたわけではなく、スポーツに関連する業界への就職を漠然と考えていました。
-            しかし、就職活動のために業界研究を進める中で、高校時代に仲良くしてくださった体育教師から言われた言葉が心に残っていました。
-            「お前は、俺には向いていないこういうパソコンとかの世界の方が合ってるよ。」
-            その何気ない一言をきっかけにIT業界へ興味を持ち、スポーツメーカーの店舗スタッフと迷った末に、IT企業にSEとして入社することを決意しました。実際に働き始めると想像以上に面白く、今ではSEという仕事にすっかりのめり込み、楽しく働いています。
-            仕事では、サーバー構築からアプリケーション開発、クラウド環境構築、システム運用保守まで幅広く経験してきました。最近は特に、AWSやAzureといったクラウド環境を活用したシステム構築や運用に携わることが多いです。
+            特にクラウド領域では、可用性・セキュリティ・コスト最適化を意識した設計を得意としています。
+            また、個人では技術ブログの運営や検証を継続しており、アウトプットを重視しています。
           </p>
         </div>
       </section>
+
+      <!-- CAREER -->
       <section>
-        <h2 class="section-title">WHAT MY HOBBY?</h2>
+        <h2 class="section-title">CAREER</h2>
         <div class="content">
-          <p>Coffee:妻の影響で頑張って飲み始めたのですが気がついたら妻よりハマってしまい、今では自分のほうがこだわりが強くコーヒーにはうるさくなりました。</p>
-          <p>Travel:海外旅行が好きで、様々な国へ行きました。結婚してからはすっかりいかなくなりました。</p>
-          <p>Soccer:観戦も好きですが、観戦よりもプレーする方が好きです。</p>
+          <p><strong>■ システムエンジニア（IT企業）</strong></p>
+          <p>20XX年〜現在</p>
+
+          <ul>
+            <li>AWSを用いたインフラ設計・構築（EC2 / S3 / RDS / Lambda）</li>
+            <li>オンプレミスからクラウドへの移行プロジェクト</li>
+            <li>運用自動化（Python / Shell / PowerShell）</li>
+            <li>監視設計および障害対応</li>
+          </ul>
+
+          <p><strong>■ 主な実績</strong></p>
+          <ul>
+            <li>クラウド移行により運用コストを約30%削減</li>
+            <li>自動化により障害対応時間を約50%短縮</li>
+            <li>複数のインフラ案件で設計〜構築を担当</li>
+          </ul>
         </div>
       </section>
+
+      <!-- STRENGTHS -->
       <section>
-        <h2 class="section-title">MY SKILLS?</h2>
+        <h2 class="section-title">STRENGTHS</h2>
+        <div class="content">
+          <ul>
+            <li><strong>幅広い技術領域：</strong>インフラ〜アプリケーションまで一貫対応可能</li>
+            <li><strong>問題解決力：</strong>障害時の原因分析と迅速な復旧対応</li>
+            <li><strong>継続力：</strong>ブログ運営・技術検証を継続</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section>
+        <h2 class="section-title">SKILLS</h2>
+        <div class="content">
+          <ul>
+            <li><strong>Frontend:</strong> HTML, CSS, JavaScript, Vue.js, Astro</li>
+            <li><strong>Backend:</strong> Node.js, Python</li>
+            <li><strong>Infrastructure:</strong> AWS, Azure, Google Cloud</li>
+            <li><strong>Tools:</strong> GitHub, PowerShell</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section>
+        <h2 class="section-title">PROJECTS</h2>
         <div class="content">
           <p>
-            HTML,CSS,JavaScript,Vue.js,Python,Node.js,PowerShell,Github,AWS,GoogleCloud,Azure,PMP,ITIL
+            個人で技術ブログを運営し、インフラ・クラウド・開発に関する知見を発信しています。
+          </p>
+          <ul>
+            <li>Astro + GitHub Pages によるブログ構築</li>
+            <li>AWS / Wasabi を活用したストレージ検証</li>
+            <li>3DプリンタやIoT関連の検証記事</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- CERTIFICATE -->
+      <section>
+        <h2 class="section-title">CERTIFICATE</h2>
+        <div class="content">
+          <ul>
+            <li>Project Management Professional (PMP)</li>
+            <li>AWS Certified Cloud Practitioner</li>
+            <li>AWS Certified Solutions Architect - Associate</li>
+            <li>AWS Certified Solutions Architect - Professional</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- STORY -->
+      <section>
+        <h2 class="section-title">STORY</h2>
+        <div class="content">
+          <p>
+            神奈川県湘南で生まれ育ち、学生時代はサッカーに打ち込んできました。
+            当初はIT業界を志望していたわけではありませんでしたが、
+            高校時代の恩師の言葉をきっかけにITの世界に興味を持ちました。
+          </p>
+          <p>
+            実際にエンジニアとして働き始めると、その奥深さと面白さに魅了され、
+            現在ではインフラからクラウドまで幅広い領域に携わっています。
           </p>
         </div>
       </section>
+
+      <!-- FUTURE -->
       <section>
-        <h2 class="section-title">GET TO KNOW ME!!</h2>
+        <h2 class="section-title">FUTURE</h2>
         <div class="content">
           <p>
-            IT技術はたくさんの人の生活を豊かにしていくものだと思います。経験がなくても、まずは自分でやってみることが大切です。
-            日本の中小企業で頑張っているみなさまの少しでもお役に立てるような記事やブログを投稿して、自分なりにたくさんの人の役に立てるようなサイトにしていきたいと思います。
+            クラウドネイティブなアーキテクチャ設計を強みに、
+            システムの価値を最大化できるエンジニアを目指しています。
+          </p>
+          <p>
+            また、ブログや個人開発を通じて技術発信を続け、
+            エンジニアコミュニティにも価値提供していきたいと考えています。
           </p>
         </div>
       </section>
-      <!-- <section>
-        <h2 class="section-title">Skills</h2>
+
+      <!-- HOBBY -->
+      <section>
+        <h2 class="section-title">HOBBY</h2>
         <div class="content">
-          <p>officia unde omnis</p>
+          <p><strong>Coffee:</strong> ハンドドリップにハマり、豆や抽出方法にもこだわっています。</p>
+          <p><strong>Travel:</strong> 海外旅行が好きで様々な国を訪れてきました。</p>
+          <p><strong>Soccer:</strong> 観戦よりもプレーすることが好きです。</p>
         </div>
-      </section> -->
+      </section>
+
     </main>
 
     <ContactCTA />

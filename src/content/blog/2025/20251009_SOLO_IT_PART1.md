@@ -1,7 +1,7 @@
 ---
 title: "情シス1人の中小企業でIT導入を始める"
 publishDate: 2025-10-09 00:00:00
-img: /assets/blog/2025/SOLO_IT_PERSONNEL.png
+img: /assets/blog/SOLO_IT_PERSONNEL.png
 img_alt: SOLO
 description: |
   中小企業のIT導入に悩む方へ。架空の製造業「株式会社ビーチスリー」を舞台に、情シス1人でIT環境を整える過程をリアルに描くシリーズ。現場目線で学べるDX・クラウド導入のヒントが満載です。

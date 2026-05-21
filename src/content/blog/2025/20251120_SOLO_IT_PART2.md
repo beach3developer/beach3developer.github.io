@@ -1,7 +1,7 @@
 ---
 title: "古いPC上に構築したUbuntuにVirtualBoxで再生！手軽に使える検証用サーバー環境を構築する手順まとめ"
 publishDate: 2025-11-20 00:00:00
-img: /assets/blog/2025/SOLO_IT_PERSONNEL.png
+img: /assets/blog/SOLO_IT_PERSONNEL.png
 img_alt: 古いPCをUbuntu＋VirtualBoxで再生する手順まとめ
 description: 
   古いWindowsマシンをUbuntuに変え、VirtualBoxで複数の検証用サーバーを構築する手順をまとめました。開発・検証環境を自宅に作りたいエンジニア向け。
@@ -22,7 +22,7 @@ tags:
 実際に手を動かしてみることで理解が深まります。  
 「百聞は一見にしかず」という言葉のとおり、古いPCを検証用マシンに変えて、思い切って試してみましょう。
 
-👉 [古いWindows PCをUbuntuサーバーに再生！自宅で検証環境をつくる手順まとめ](https://beach3developer.github.io/blog/20251106_setup_ubuntu_server/)
+👉 [古いWindows PCをUbuntuサーバーに再生！自宅で検証環境をつくる手順まとめ](https://www.beach3blog.com/blog/20251106_setup_ubuntu_server/)
 
 ---
 
