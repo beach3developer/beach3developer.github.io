@@ -1,0 +1,214 @@
+---
+import Hero from '../components/Hero.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Privacy Policy | Beach3" description="Beach3 Privacy Policy">
+  <div class="stack gap-20">
+    <main class="wrapper privacy">
+      <Hero
+        title="Privacy Policy"
+        tagline="プライバシーポリシーについて"
+      >
+        <img
+          width="1553"
+          height="873"
+          src="/assets/about.jpeg"
+          alt="Privacy Policy"
+        />
+      </Hero>
+
+      <!-- 個人情報の利用目的 -->
+      <section>
+        <h2 class="section-title">PERSONAL INFORMATION</h2>
+        <div class="content">
+          <p>
+            当サイトでは、お問い合わせやコメント投稿の際に、名前やメールアドレス等の個人情報をご入力いただく場合があります。
+          </p>
+          <p>
+            取得した個人情報は、お問い合わせへの回答や必要な情報をご連絡するために利用し、それ以外の目的では利用いたしません。
+          </p>
+        </div>
+      </section>
+
+      <!-- 広告について -->
+      <section>
+        <h2 class="section-title">ADVERTISEMENT</h2>
+        <div class="content">
+          <p>
+            当サイトでは、第三者配信の広告サービス「Google AdSense」を利用する予定、または利用しています。
+          </p>
+          <p>
+            Googleなどの広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookieを使用することがあります。
+          </p>
+          <p>
+            Cookieを使用することで当サイトは訪問者のコンピュータを識別できるようになりますが、個人を特定するものではありません。
+          </p>
+          <p>
+            Cookieを無効にする方法やGoogle AdSenseに関する詳細は、Googleの広告ポリシーをご確認ください。
+          </p>
+        </div>
+      </section>
+
+      <!-- アクセス解析 -->
+      <section>
+        <h2 class="section-title">ANALYTICS</h2>
+        <div class="content">
+          <p>
+            当サイトでは、Googleによるアクセス解析ツール「Google Analytics」を利用しています。
+          </p>
+          <p>
+            Google Analyticsはトラフィックデータ収集のためにCookieを使用しています。
+          </p>
+          <p>
+            このトラフィックデータは匿名で収集されており、個人を特定するものではありません。
+          </p>
+        </div>
+      </section>
+
+      <!-- コメント -->
+      <section>
+        <h2 class="section-title">COMMENTS</h2>
+        <div class="content">
+          <p>
+            当サイトでは、スパム・荒らしへの対応として、コメント時に使用されたIPアドレスを記録する場合があります。
+          </p>
+          <p>
+            これはブログの標準機能としてサポートされている機能であり、スパム・荒らし対応以外に使用することはありません。
+          </p>
+        </div>
+      </section>
+
+      <!-- 免責事項 -->
+      <section>
+        <h2 class="section-title">DISCLAIMER</h2>
+        <div class="content">
+          <p>
+            当サイトからリンクやバナーなどによって他サイトへ移動された場合、移動先サイトで提供される情報・サービス等について一切の責任を負いません。
+          </p>
+          <p>
+            また、当サイトのコンテンツ・情報については、できる限り正確な情報を掲載するよう努めていますが、正確性や安全性を保証するものではありません。
+          </p>
+          <p>
+            当サイトに掲載された内容によって生じた損害等について、一切の責任を負いかねますのでご了承ください。
+          </p>
+        </div>
+      </section>
+
+      <!-- 著作権 -->
+      <section>
+        <h2 class="section-title">COPYRIGHT</h2>
+        <div class="content">
+          <p>
+            当サイトに掲載されている文章・画像・ソースコード等の著作物の無断転載を禁止します。
+          </p>
+          <p>
+            引用を行う際は、引用元の明記をお願いいたします。
+          </p>
+        </div>
+      </section>
+
+      <!-- リンク -->
+      <section>
+        <h2 class="section-title">LINKS</h2>
+        <div class="content">
+          <p>
+            当サイトは基本的にリンクフリーです。
+          </p>
+          <p>
+            ただし、画像への直リンクやインラインフレームの使用はご遠慮ください。
+          </p>
+        </div>
+      </section>
+
+      <!-- お問い合わせ -->
+      <section>
+        <h2 class="section-title">CONTACT</h2>
+        <div class="content">
+          <p>
+            当サイトへのお問い合わせはContactページよりお願いいたします。
+          </p>
+        </div>
+      </section>
+
+      <!-- 運営者情報 -->
+      <section>
+        <h2 class="section-title">SITE OWNER</h2>
+        <div class="content">
+          <p><strong>運営者:</strong> Beach3</p>
+          <p><strong>サイトURL:</strong> https://www.beach3blog.com/</p>
+          <p>
+            主にクラウド、インフラ、Astro、GitHub Pages、Wasabi、Raspberry Piなどに関する技術情報を発信しています。
+          </p>
+        </div>
+      </section>
+
+      <!-- 制定日 -->
+      <section>
+        <h2 class="section-title">UPDATED</h2>
+        <div class="content">
+          <p>制定日: 2026年5月21日</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .privacy {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  img {
+    margin-top: 1.5rem;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-md);
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--gray-200);
+  }
+
+  .section-title {
+    grid-column-start: 1;
+    font-size: var(--text-xl);
+    color: var(--gray-0);
+  }
+
+  .content {
+    grid-column: 2 / 4;
+    line-height: 1.9;
+  }
+
+  .content :global(a) {
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .content :global(a:hover),
+  .content :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  @media (min-width: 50em) {
+    .privacy {
+      display: grid;
+      grid-template-columns: 1fr 60% 1fr;
+    }
+
+    .privacy > :global(:first-child) {
+      grid-column-start: 2;
+    }
+
+    section {
+      display: contents;
+      font-size: var(--text-lg);
+    }
+  }
+</style>
